@@ -7,33 +7,40 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import firebase from 'firebase';
-import { Header, Card, CardSection, Spinner, Button } from './src/common';
-import LoginForm from './src/register/loginForm';
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import reducers from './src/reducers'
+import { Header, Card, CardSection, Spinner, Button } from './src/components/common';
+// import LoginForm from './src/register/loginForm';
+import LibraryList from './src/components/LibraryList';
 
-type Props = {};
+// type Props = {};
+// <Props>
 
-export default class App extends Component<Props> {
+store = createStore(reducers)
+
+export default class App extends Component {
   state = { loggedIn: false };
   componentWillMount(){
-    this.setState({ loggedIn: null });
-    firebase.initializeApp(
-      {
-        apiKey: "AIzaSyBVSPyQSBHFNbtu60IIk2iYuD-bZZtvaOA",
-        authDomain: "firechat-ccc58.firebaseapp.com",
-        databaseURL: "https://firechat-ccc58.firebaseio.com",
-        projectId: "firechat-ccc58",
-        storageBucket: "firechat-ccc58.appspot.com",
-        messagingSenderId: "1081486264705"
-      }
-    );
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user){
-        this.setState({ loggedIn: true });  
-      }else{
-        this.setState({ loggedIn: false });
-      }
+    // this.setState({ loggedIn: null });
+    // firebase.initializeApp(
+    //   {
+    //     apiKey: "AIzaSyBVSPyQSBHFNbtu60IIk2iYuD-bZZtvaOA",
+    //     authDomain: "firechat-ccc58.firebaseapp.com",
+    //     databaseURL: "https://firechat-ccc58.firebaseio.com",
+    //     projectId: "firechat-ccc58",
+    //     storageBucket: "firechat-ccc58.appspot.com",
+    //     messagingSenderId: "1081486264705"
+    //   }
+    // );
+    // firebase.auth().onAuthStateChanged((user) => {
+    //   if (user){
+    //     this.setState({ loggedIn: true });  
+    //   }else{
+    //     this.setState({ loggedIn: false });
+    //   }
       
-    });
+    // });
   }
 
   renderButton() {
@@ -61,15 +68,19 @@ export default class App extends Component<Props> {
 
   render() {
     return (
-      <View style={style.contentStyle}>
-        <Header title="Login" />
-        {this.renderButton()}
-      </View>
+      <Provider store={store}>
+        <View style={style.contentStyle}>
+          <Header title="Login" />
+          {/* {this.renderButton()} */}
+          <LibraryList />
+        </View>
+      </Provider>
     );
   }
 }
 
 const style = {
   contentStyle: {
+    flex: 1
   }
 }

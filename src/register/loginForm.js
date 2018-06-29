@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
 import firebase from 'firebase';
-import { Card, CardSection, Button, Input, Spinner } from './../common';
+import { Card, CardSection, Button, Input, Spinner } from './../components/common';
 
 class LoginForm extends Component {
     state = { email: '', password: '', error: '', loading: false } ;
