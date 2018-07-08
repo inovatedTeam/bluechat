@@ -22,8 +22,8 @@ class LibraryItem extends Component {
                 </CardSection>
             );
         }
-        
     }
+
     render() {
         const { id, title } = this.props.library;
         return (
