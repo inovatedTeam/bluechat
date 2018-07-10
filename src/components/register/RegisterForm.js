@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChanged, userLogin } from './../../action';
+import { emailChanged, passwordChanged, userRegister } from './../../action';
 import { Card, CardSection, Button, Input, Spinner } from './../common';
 
-class LoginForm extends Component {
-    
+class RegisterForm extends Component {
+
     static navigationOptions = {
-        title: 'Home',
+        title: 'Register',
     };
-    
-    onLoginBtnPress() {
+
+    onRegisterBtnPress() {
         const { email, password } = this.props;
-        this.props.userLogin({ email, password });
+        this.props.userRegister({ email, password });
     }
 
     onEmailChange = (text) => {
@@ -23,15 +23,15 @@ class LoginForm extends Component {
         this.props.passwordChanged(text);
     }
 
-    renderLoginButton() {
+    renderRegisterButton() {
         if (this.props.loading) {
             return <Spinner size="large" />;
         }
         return (
-            <Button onPress={this.onLoginBtnPress.bind(this)}>Login</Button>
+            <Button onPress={this.onRegisterBtnPress.bind(this)}>Register</Button>
         );
     }
-    
+
     render() {
         return (
             <Card>
@@ -56,7 +56,7 @@ class LoginForm extends Component {
                     {this.props.error}
                 </Text>
                 <CardSection>
-                    {this.renderLoginButton()} 
+                    {this.renderRegisterButton()} 
                 </CardSection>
             </Card>
         );
@@ -70,4 +70,8 @@ const mapStateToProps = ({ auth }) => {
     };
 };
 
-export default connect(mapStateToProps, { emailChanged, passwordChanged, userLogin })(LoginForm);
+export default connect(mapStateToProps, 
+    { emailChanged, 
+        passwordChanged, 
+        userRegister 
+    })(RegisterForm);

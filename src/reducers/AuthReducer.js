@@ -2,7 +2,7 @@ import {
     EMAIL_CHANGED, 
     PASSWORD_CHANGED, 
     USER_LOGIN_FAIL, 
-    USER_LOGIN_LOADING, 
+    WAITING_SERVER_RESPONSE, 
     USER_LOGIN_SUCCESS 
 } from './../action/types';
 
@@ -31,7 +31,7 @@ export default (state = INITIAL_STATE, action) => {
             };
         case USER_LOGIN_FAIL:
             return { ...state, password: '', error: 'Authentication Error', loading: false };
-        case USER_LOGIN_LOADING:
+        case WAITING_SERVER_RESPONSE:
             return { ...state, loading: true };
         default:
             return state;

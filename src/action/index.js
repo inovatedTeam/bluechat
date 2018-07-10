@@ -4,7 +4,7 @@ import {
     PASSWORD_CHANGED, 
     USER_LOGIN_FAIL, 
     USER_LOGIN_SUCCESS, 
-    USER_LOGIN_LOADING 
+    WAITING_SERVER_RESPONSE 
 } from './types';
 
 export const emailChanged = (text) => {
@@ -23,10 +23,19 @@ export const passwordChanged = (text) => {
 
 export const userLogin = ({ email, password }) => {
     return (dispatch) => {
-        dispatch({ type: USER_LOGIN_LOADING });
+        dispatch({ type: WAITING_SERVER_RESPONSE });
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(user => userLoginSuccess(dispatch, user)) 
             .catch(() => userLoginFail(dispatch));
+    };
+};
+
+export const userRegister = ({ email, password }) => {
+    return (dispatch) => {
+        dispatch({ type: WAITING_SERVER_RESPONSE });
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then(this.onLoginSuccess.bind(this)) 
+            .catch(this.onLoginFaild.bind(this));
     };
 };
 
@@ -35,9 +44,6 @@ const userLoginSuccess = (dispatch, user) => {
 };
 
 const userLoginFail = (dispatch) => {
-    // firebase.auth().createUserWithEmailAndPassword(email, password)
-    //     .then(this.onLoginSuccess.bind(this)) 
-    //     .catch(this.onLoginFaild.bind(this));
     dispatch({ type: USER_LOGIN_FAIL });
 };
 
